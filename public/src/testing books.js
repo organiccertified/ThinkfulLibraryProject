@@ -1444,51 +1444,25 @@ const authors = [{
 ];
 
 
-// function partitionBooksByBorrowedStatus(books) {
-//It returns an array with two arrays inside of it. 
-//All of the inputted books are present in either the first or second array.
-//the first array contains book objects that represent the books 
-//_that are currently checked out_, while the second array contains 
-//book objects that represent the books _that have been returned._ 
-//You can check for the return status by 
-//looking at the first transaction object in the `borrows` array.
-
-//all books [[checked out],[returned]]
-
-//books: [{
-// id: "5f447132d487bd81da01e25e",
-// title: "sit eiusmod occaecat eu magna",
-// genre: "Science",
-// authorId: 8,
-// borrows: [
-//   {
-//     id: "5f446f2e2cfa3e1d234679b9",
-//     returned: false,
-//   },]
-//}]
+function partitionBooksByBorrowedStatus(books) {
+  let total = [], stillBorrowedBooks = [], returnedBooks = []
 
 
+  books.forEach(book => {
+    book.borrows.some((borrow)=> borrow.returned == false) 
+      ? stillBorrowedBooks.push(book) : returnedBooks.push(book)
+  });
+ 
+  total.push(stillBorrowedBooks)
+  total.push(returnedBooks)
 
-//   let total = books.reduce((acc, book) => {
-//     let bookBorrows = book.borrows;
-//     let returnedBooks =[];
-//     let borrowedBooks =[];
-
-
-//     const stillBorrowed = (hasBeenReturned) => hasBeenReturned.returned == true
-
-//     bookBorrows.every(stillBorrowed) ? returnedBooks.push(book) : borrowedBooks.push(book);
-
-//     return acc = returnedBooks + borrowedBooks; 
-
-//   },[])
-
-//   return total; 
+  return total; 
 
 
-// }
+}
 
-// console.log(JSON.stringify(partitionBooksByBorrowedStatus(books)),null,"\n");
+console.log(JSON.stringify(partitionBooksByBorrowedStatus(books)),"\n");
+
 
 
 
@@ -1503,29 +1477,29 @@ should include the `returned` entry from the corresponding transaction object in
 
 
 */
+// let borrowers = []
+// let authorData = {}
+// let result = []
 
-// let totalAccountsThatBorrowedTheBook1 =[];
+// book.borrows.forEach((borrow)=>
+// {
+//   authorData = accounts.find((author)=> author.id == borrow.id);
+//   newObject = {...borrow, ...authorData};
+//   borrowers.push(newObject);
 
-// let borrowHistory = book.borrows;
+//  })
 
-// borrowHistory.length <=10 ? totalLen = borrowHistory.length : totalLen = 10;
-
-// for(let i = 0; i < totalLen; i++){
-
-//   borrowerData = accounts.find((borrower) => borrowHistory[i].id == borrower.id);
-
-//     newData = { 
-//       id: borrowerData.id,
-//       returned: borrowHistory[i].returned,
-//       ...borrowerData
-//     }
-
-//     totalAccountsThatBorrowedTheBook1.push(newData)
-
+// if(borrowers.length<=10){
+//   for(let i =0; i < borrowers.length; i++){
+//     result[i] = borrowers[i]
+//   }
+// }else{
+//   for(let i =0; i <=10; i++){
+//     result[i] = borrowers[i]
+//   } 
 // }
 
-// return totalAccountsThatBorrowedTheBook1
-
+// return result 
 
 // }
 
@@ -1643,49 +1617,49 @@ should include the `returned` entry from the corresponding transaction object in
 //     last: "Moreno",
 //   },
 
-function getMostPopularAuthors(books, authors) {
-  let authorData = []
-  let popularAuthor = []
-  let countsById = []
-  let result = []
+// function getMostPopularAuthors(books, authors) {
+//   let authorData = []
+//   let popularAuthor = []
+//   let countsById = []
+//   let result = []
 
-  authors.map((author) => {
-    authorData.push({
-      name: author.name.first + " " + author.name.last,
-      id: author.id
-    })
-  })
-  // console.log(authorData)
-  authorData.forEach((author) => {
-    let booksByAuthor = [];
-    booksByAuthor = books.filter((book) =>
-      book.authorId == author.id
-    )
-    popularAuthor.push({
-      ["id"]: author.id,
-      ["name"]: author.name,
-      ["books"]: booksByAuthor
-    })
-  })
-  //  console.log(popularAuthor)
-  popularAuthor.forEach((author) => {
-    if (author.books.length > 0) {
-      let count = 0;
-      author.books.forEach((book) => count += book.borrows.length)
-      countsById.push({
-        ["id"]: author.id,
-        ["name"]: author.name,
-        ["count"]: count
-      })
-    }
-  })
+//   authors.map((author) => {
+//     authorData.push({
+//       name: author.name.first + " " + author.name.last,
+//       id: author.id
+//     })
+//   })
+//   // console.log(authorData)
+//   authorData.forEach((author) => {
+//     let booksByAuthor = [];
+//     booksByAuthor = books.filter((book) =>
+//       book.authorId == author.id
+//     )
+//     popularAuthor.push({
+//       ["id"]: author.id,
+//       ["name"]: author.name,
+//       ["books"]: booksByAuthor
+//     })
+//   })
+//   //  console.log(popularAuthor)
+//   popularAuthor.forEach((author) => {
+//     if (author.books.length > 0) {
+//       let count = 0;
+//       author.books.forEach((book) => count += book.borrows.length)
+//       countsById.push({
+//         ["id"]: author.id,
+//         ["name"]: author.name,
+//         ["count"]: count
+//       })
+//     }
+//   })
 
-  countsById.sort((count1, count2) => count2.count - count1.count);
-  for (let i = 0; i < 5; i++) {
-    result.push({["name"]: countsById[i].name, ["count"]: countsById[i].count})
-  }
-  console.log(result)
-}
+//   countsById.sort((count1, count2) => count2.count - count1.count);
+//   for (let i = 0; i < 5; i++) {
+//     result.push({["name"]: countsById[i].name, ["count"]: countsById[i].count})
+//   }
+//   return result
+// }
 
 
-getMostPopularAuthors(books, authors)
+// console.log(getMostPopularAuthors(books, authors))

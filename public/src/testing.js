@@ -8301,6 +8301,25 @@ const accounts = [
   },
 ];
 
+
+function getBooksBorrowedCount(books) {
+  
+  let result =  books.reduce((acc, book)=> {
+    
+    book.borrows.find((checkedOut) => checkedOut.returned == false)
+      ? acc+=1 : acc+=0;
+      return acc;
+ 
+  },0)
+
+  return result
+
+}
+
+console.log(getBooksBorrowedCount(books))
+
+
+
 //   function findAccountById(accounts, id) {
 
 //     return accounts.reduce((acc,account)=> {
@@ -8395,9 +8414,9 @@ id: "5f447132d487bd81da01e25e",
 // }
 
 
-// console.log(getBooksPossessedByAccount("0", books, authors));
+// console.log(getBooksPossessedByAccount("5f446f2e5e2952040e9f9b88", books, authors));
 
-//console.log(JSON.stringify(getBooksPossessedByAccount("5f446f2e5e2952040e9f9b88", books, authors)),null,'\n')
+// console.log(JSON.stringify(getBooksPossessedByAccount("5f446f2e5e2952040e9f9b88", books, authors)),null,'\n')
 
 // function getCarColor(car) {
 //   try{

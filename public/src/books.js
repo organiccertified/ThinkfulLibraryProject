@@ -8,22 +8,19 @@ function findBookById(books, id) {
 }
 
 function partitionBooksByBorrowedStatus(books) {
-  let total = books.reduce((acc, book) => {
-    let bookBorrows = book.borrows;
-    let returnedBooks =[];
-    let borrowedBooks =[];
-    
-    
-    const stillBorrowed = (hasBeenReturned) => hasBeenReturned.returned == true
+  let total = [], stillBorrowedBooks = [], returnedBooks = []
 
-    bookBorrows.every(stillBorrowed) ? returnedBooks.push(book) : borrowedBooks.push(book);
-    
-    return acc = returnedBooks + borrowedBooks; 
 
-  },[])
+  books.forEach(book => {
+    book.borrows.some((borrow)=> borrow.returned == false) 
+      ? stillBorrowedBooks.push(book) : returnedBooks.push(book)
+  });
+
+  total.push(stillBorrowedBooks)
+  total.push(returnedBooks)
 
   return total; 
-    
+
 
 }
     
@@ -40,33 +37,33 @@ function getBorrowersForBook(book, accounts) {
   
   
   */
+  let borrowers = []
+  let authorData = {}
+  let result = []
   
-  let totalAccountsThatBorrowedTheBook1 =[];
-
-  let borrowHistory = book.borrows;
+  book.borrows.forEach((borrow)=>
+  {
+    authorData = accounts.find((author)=> author.id == borrow.id);
+    newObject = {...borrow, ...authorData};
+    borrowers.push(newObject);
   
-  borrowHistory.length <=10 ? totalLen = borrowHistory.length : totalLen = 10;
+   })
   
-  for(let i = 0; i < totalLen; i++){
+  if(borrowers.length<=10){
+    for(let i =0; i < borrowers.length; i++){
+      result[i] = borrowers[i]
+    }
+  }else{
+    for(let i =0; i <=10; i++){
+      result[i] = borrowers[i]
+    } 
+  }
   
-    borrowerData = accounts.find((borrower) => borrowHistory[i].id == borrower.id);
+  return result 
   
-      newData = { 
-        id: borrowerData.id,
-        returned: borrowHistory[i].returned,
-        ...borrowerData
-      }
-   
-      totalAccountsThatBorrowedTheBook1.push(newData)
-      
   }
   
   
-
-  return totalAccountsThatBorrowedTheBook1
-  
-  
-  }
 
 module.exports = {
   findAuthorById,

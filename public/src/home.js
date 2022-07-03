@@ -6,17 +6,21 @@ function getTotalAccountsCount(accounts) {
   return accounts.length;
 }
 
+
 function getBooksBorrowedCount(books) {
+  let result = 0;
   
-  return books.reduce((acc, book)=> {
+  result =  books.reduce((acc, book)=> {
     
     book.borrows.find((checkedOut) => checkedOut.returned == false)
       ? acc+=1 : acc+=0;
       return acc;
  
   },0)
-}
 
+  return result
+
+}
 
 function getMostCommonGenres(books){
   let commonGenres = [];
@@ -105,6 +109,7 @@ function getMostPopularBooks(books) {
       result.push({["name"]: countsById[i].name, ["count"]: countsById[i].count})
     }
     // console.log(result)
+    return result
   }
   
 module.exports = {
