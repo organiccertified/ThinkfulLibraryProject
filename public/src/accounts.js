@@ -29,31 +29,24 @@ function getTotalNumberOfBorrows(account, books) {
   return result;
 }
 
+
 function getBooksPossessedByAccount(account, books, authors) {
-  let booksCurrentlyCheckedOut = books.filter(isTheBookCheckedOut)
+  const borrowing = books.filter((book) => {
+    return book.borrows.find(
+      (person) => person.id == account.id && person.returned == false
+    );
+  });
+  const findAuthor = (id) => {
+    return authors.find((writer) => writer.id == id);
+  };
 
-  function isTheBookCheckedOut(book){
-    let newBorrows = book.borrows.find((stillBorrowed)=> stillBorrowed.returned == false && stillBorrowed.id == account );
-    book.borrows = []
-    book.borrows.push(newBorrows)
-    return newBorrows
-  }
-
-  //from each booksCurrentlyCheckedOut get the authorId
-  //check which id is the same from authors 
-  //bring the information
-
-  booksCurrentlyCheckedOut.reduce((acc, book)=> {
-    book["author"] = authors.find((author) => author.id == book.authorId)
-  },[])
-
-
-  return booksCurrentlyCheckedOut
-
-   
-
+  return borrowing.map((book) => {
+    return {
+      ...book,
+      author: findAuthor(book.authorId),
+    };
+  });
 }
-  
 
 
 module.exports = {

@@ -54,7 +54,7 @@ function getBorrowersForBook(book, accounts) {
       result[i] = borrowers[i]
     }
   }else{
-    for(let i =0; i <=10; i++){
+    for(let i =0; i <10; i++){
       result[i] = borrowers[i]
     } 
   }
