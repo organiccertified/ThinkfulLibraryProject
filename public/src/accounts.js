@@ -29,6 +29,12 @@ function getTotalNumberOfBorrows(account, books) {
   return result;
 }
 
+//HELPER FUNCTION
+// function findAuthor(id) {
+//   const findAuthor = (id) =>{
+//   return authors.find((writer) => writer.id == id);
+// }};
+
 
 function getBooksPossessedByAccount(account, books, authors) {
   const borrowing = books.filter((book) => {
@@ -36,6 +42,7 @@ function getBooksPossessedByAccount(account, books, authors) {
       (person) => person.id == account.id && person.returned == false
     );
   });
+
   const findAuthor = (id) => {
     return authors.find((writer) => writer.id == id);
   };
